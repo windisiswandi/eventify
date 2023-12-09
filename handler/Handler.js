@@ -16,6 +16,7 @@ const getUserById = (req, res) => {
   });
 };
 
+/*========== Handler Event ==========*/
 const getEvents = (req, res) => {
   conn.query('select * from events', (err, result) => {
     res.status(200).json(result);
@@ -36,4 +37,12 @@ const addEvent = (req, res) => {
   });
 };
 
-module.exports = { getUsers, getUserById, getEvents, getEventById, addEvent };
+/*========== END ==========*/
+
+module.exports = { handler: {
+  getUsers, 
+  getUserById, 
+  getEvents, 
+  getEventById, 
+  addEvent 
+}};
