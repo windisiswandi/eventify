@@ -12,8 +12,8 @@ router.post(`${BASE_URL}/register`, register);
 router.get(`${BASE_URL}/events`, handler.getEvents);
 router.get(`${BASE_URL}/events/:id`, handler.getEventById);
 router.post(`${BASE_URL}/events`, handler.addEvent);
-router.put(`${BASE_URL}/events/:id`, addEvent);
-router.delete(`${BASE_URL}/events/:id`, addEvent);
+router.put(`${BASE_URL}/events/:id`, handler.updateEvent);
+router.delete(`${BASE_URL}/events/:id`, handler.delEvents);
 
 // router.post()
 
