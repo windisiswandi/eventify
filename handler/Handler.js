@@ -37,6 +37,21 @@ const addEvent = (req, res) => {
   });
 };
 
+const updateEvent = (req, res) => {
+  const id = req.params.id
+  conn.query('update events set ? where ?', [req.body, { id }], (err) => {
+    if (err) throw err;
+    res.status(200).json({msg: "event berhasil diupdate"})
+  });
+}
+
+const delEvents = (req, res) => {
+  const id = req.params.id
+  conn.query(`delete from events where id=${id}`, (err) => {
+    if (err) throw err;
+    res.status(200).json({ msg: 'event berhasil dihapus' });
+  });
+}
 /*========== END ==========*/
 
 module.exports = { handler: {
@@ -44,5 +59,7 @@ module.exports = { handler: {
   getUserById, 
   getEvents, 
   getEventById, 
-  addEvent 
+  addEvent,
+  updateEvent,
+  delEvents
 }};
