@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 10, 2023 at 09:59 AM
+-- Generation Time: Dec 10, 2023 at 01:05 PM
 -- Server version: 10.4.24-MariaDB
 -- PHP Version: 8.1.6
 
@@ -55,11 +55,11 @@ CREATE TABLE `users` (
   `nama` varchar(100) NOT NULL,
   `email` varchar(100) NOT NULL,
   `password` varchar(100) NOT NULL,
-  `alamat` text NOT NULL,
-  `telp` varchar(15) NOT NULL,
-  `jenis_kelamin` varchar(25) NOT NULL,
-  `tgl_lahir` date NOT NULL,
-  `deskripsi` text NOT NULL
+  `alamat` text DEFAULT NULL,
+  `telp` varchar(15) DEFAULT NULL,
+  `jenis_kelamin` varchar(25) DEFAULT NULL,
+  `tgl_lahir` date DEFAULT NULL,
+  `deskripsi` text DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
@@ -100,7 +100,7 @@ ALTER TABLE `events`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
