@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.2.0
+-- version 5.1.1
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 10, 2023 at 01:05 PM
--- Server version: 10.4.24-MariaDB
--- PHP Version: 8.1.6
+-- Generation Time: Dec 11, 2023 at 08:24 AM
+-- Server version: 10.4.22-MariaDB
+-- PHP Version: 8.0.13
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -24,6 +24,18 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `anggota_devisi`
+--
+
+CREATE TABLE `anggota_devisi` (
+  `id` int(11) NOT NULL,
+  `id_devisi` varchar(50) NOT NULL,
+  `id_anggota` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `events`
 --
 
@@ -37,12 +49,30 @@ CREATE TABLE `events` (
   `kode` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+-- --------------------------------------------------------
+
 --
--- Dumping data for table `events`
+-- Table structure for table `join_event`
 --
 
-INSERT INTO `events` (`id`, `judul`, `deskripsi`, `tanggal`, `kategori`, `foto`, `kode`) VALUES
-(1, 'israj mikraj', 'acara maulid nabi', '2023-04-04', 'sport', '', 'ads-a3r-xdf');
+CREATE TABLE `join_event` (
+  `id` int(11) NOT NULL,
+  `kode_event` varchar(100) NOT NULL,
+  `id_user` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `panitia`
+--
+
+CREATE TABLE `panitia` (
+  `id` int(11) NOT NULL,
+  `kode_event` varchar(100) NOT NULL,
+  `nama_devisi` varchar(100) NOT NULL,
+  `id_devisi` varchar(10) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -75,10 +105,30 @@ INSERT INTO `users` (`id`, `nama`, `email`, `password`, `alamat`, `telp`, `jenis
 --
 
 --
+-- Indexes for table `anggota_devisi`
+--
+ALTER TABLE `anggota_devisi`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `events`
 --
 ALTER TABLE `events`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `kode` (`kode`);
+
+--
+-- Indexes for table `join_event`
+--
+ALTER TABLE `join_event`
   ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `panitia`
+--
+ALTER TABLE `panitia`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `id_devisi` (`id_devisi`);
 
 --
 -- Indexes for table `users`
@@ -91,10 +141,28 @@ ALTER TABLE `users`
 --
 
 --
+-- AUTO_INCREMENT for table `anggota_devisi`
+--
+ALTER TABLE `anggota_devisi`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
 -- AUTO_INCREMENT for table `events`
 --
 ALTER TABLE `events`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+
+--
+-- AUTO_INCREMENT for table `join_event`
+--
+ALTER TABLE `join_event`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT for table `panitia`
+--
+ALTER TABLE `panitia`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT for table `users`
