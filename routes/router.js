@@ -4,7 +4,7 @@ const BASE_URL = '/api/v1';
 const { login, register } = require('../handler/Auth');
 const { handler } = require('../handler/Handler');
 
-router.get(`${BASE_URL}/users`, handler.getUsers);
+// router.get(`${BASE_URL}/users`, handler.getUsers);
 router.get(`${BASE_URL}/users/:id`, handler.getUserById);
 router.post(`${BASE_URL}/login`, login);
 router.post(`${BASE_URL}/register`, register);
