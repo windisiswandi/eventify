@@ -1,0 +1,92 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+      "version": "1.0.0",
+      "title": "API Documentation",
+      "description": "Documentation API"
+    },
+    "servers": [
+      {
+        "url": "http://localhost:5000",
+        "description": "Development server"
+      }
+    ],
+    "tags": [
+        {
+          "name": "Auth",
+          "description": ""
+        },
+        {
+          "name": "Event",
+          "description": ""
+        },
+        {
+          "name": "Panitia",
+          "description": ""
+        },
+        {
+          "name": "Agenda",
+          "description": ""
+        },
+        {
+          "name": "Anggaran",
+          "description": ""
+        },
+        {
+          "name": "Ceklist",
+          "description": ""
+        }
+      ],
+    "paths": {
+      "/api/v1/auth/login": {
+        "post": {
+          "tags": ["Auth"],
+          "summary": "User login",
+          "requestBody": {
+            "content": {
+              "application/x-www-form-urlencoded": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "email": {"type": "string"},
+                    "password": {"type": "string"}
+                  }
+                }
+              }
+            }
+          },
+          "responses": {
+            "200": {
+              "description": "Successful login"
+            }
+          }
+        }
+      },
+      "/api/v1/auth/register": {
+        "post": {
+            "tags": ["Auth"],
+            "summary": "User registration",
+            "requestBody": {
+                "content": {
+                "application/x-www-form-urlencoded": {
+                    "schema": {
+                        "type": "object",
+                        "properties": {
+                            "nama": {"type": "string"},
+                            "email": {"type": "string"},
+                            "password": {"type": "string"}
+                        }
+                    }
+                }
+                }
+            },
+            "responses": {
+                "200": {
+                "description": "Successful registration"
+                }
+            }
+        }
+      }
+    }
+  }
+  
