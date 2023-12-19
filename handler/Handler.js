@@ -294,6 +294,7 @@ const deleteCeklist = (req, res) => {
 }
 
 const addItemCeklist = (req, res) => {
+  req.body.is_ceklist = !!req.body.is_ceklist
   conn.query(`insert into item_ceklist set ?`, req.body, (err) => {
     if(err) return res.status(500).send(err)
     res.status(201).json({msg: "item ceklist berhasil ditambahkan"})
@@ -302,6 +303,7 @@ const addItemCeklist = (req, res) => {
 
 const updateItemCeklist = (req, res) => {
   const id = req.params.id
+  req.body.is_ceklist = !!req.body.is_ceklist;
   conn.query(`update item_ceklist set ? where ?`, [req.body, {id}], (err) => {
     if(err) return res.status(500).send(err)
     res.status(201).json({msg: "item ceklist berhasil diupdate"})

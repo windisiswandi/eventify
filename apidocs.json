@@ -1,92 +1,855 @@
 {
-    "openapi": "3.0.0",
-    "info": {
-      "version": "1.0.0",
-      "title": "API Documentation",
-      "description": "Documentation API"
+  "openapi": "3.0.0",
+  "info": {
+    "version": "1.0.0",
+    "title": "API Documentation",
+    "description": "Documentation API"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:5000",
+      "description": "Development server"
+    }
+  ],
+  "tags": [
+    {
+      "name": "Auth",
+      "description": ""
     },
-    "servers": [
-      {
-        "url": "http://localhost:5000",
-        "description": "Development server"
-      }
-    ],
-    "tags": [
-        {
-          "name": "Auth",
-          "description": ""
-        },
-        {
-          "name": "Event",
-          "description": ""
-        },
-        {
-          "name": "Panitia",
-          "description": ""
-        },
-        {
-          "name": "Agenda",
-          "description": ""
-        },
-        {
-          "name": "Anggaran",
-          "description": ""
-        },
-        {
-          "name": "Ceklist",
-          "description": ""
-        }
-      ],
-    "paths": {
-      "/api/v1/auth/login": {
-        "post": {
-          "tags": ["Auth"],
-          "summary": "User login",
-          "requestBody": {
-            "content": {
-              "application/x-www-form-urlencoded": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "email": {"type": "string"},
-                    "password": {"type": "string"}
-                  }
+    {
+      "name": "User",
+      "description": ""
+    },
+    {
+      "name": "Event",
+      "description": ""
+    },
+    {
+      "name": "Panitia",
+      "description": ""
+    },
+    {
+      "name": "Agenda",
+      "description": ""
+    },
+    {
+      "name": "Anggaran",
+      "description": ""
+    },
+    {
+      "name": "Checklist",
+      "description": ""
+    }
+  ],
+  "paths": {
+    "/api/v1/auth/login": {
+      "post": {
+        "tags": ["Auth"],
+        "summary": "User login",
+        "requestBody": {
+          "content": {
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "email": { "type": "string" },
+                  "password": { "type": "string" }
                 }
               }
             }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful login"
+          }
+        }
+      }
+    },
+    "/api/v1/auth/register": {
+      "post": {
+        "tags": ["Auth"],
+        "summary": "User registration",
+        "requestBody": {
+          "content": {
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "nama": { "type": "string" },
+                  "email": { "type": "string" },
+                  "password": { "type": "string" }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful registration"
+          }
+        }
+      }
+    },
+    "/api/v1/events": {
+      "get": {
+        "tags": ["Event"],
+        "summary": "Get all events",
+        "responses": {
+          "200": {
+            "description": "A list of events"
+          }
+        }
+      },
+      "post": {
+        "tags": ["Event"],
+        "summary": "Add a new event",
+        "requestBody": {
+          "content": {
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "judul": { "type": "string" },
+                  "deskripsi": { "type": "string" },
+                  "tanggal": { "type": "string" },
+                  "kategori": { "type": "string" },
+                  "foto": { "type": "string", "format": "binary" },
+                  "kode": { "type": "string" }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "The newly created event"
+          }
+        }
+      }
+    },
+    "/api/v1/events/{id}": {
+      "get": {
+        "tags": ["Event"],
+        "summary": "Get event by ID",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The event with the specified ID"
           },
-          "responses": {
-            "200": {
-              "description": "Successful login"
+          "404": {
+            "description": "Event not found"
+          }
+        }
+      },
+      "put": {
+        "tags": ["Event"],
+        "summary": "Update event by ID",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "integer"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "judul": { "type": "string" },
+                  "deskripsi": { "type": "string" },
+                  "tanggal": { "type": "string" },
+                  "kategori": { "type": "string" },
+                  "foto": { "type": "string", "format": "binary" },
+                  "kode": { "type": "string" }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The updated event"
+          },
+          "500": {
+            "description": "Server Error"
+          }
+        }
+      },
+      "delete": {
+        "tags": ["Event"],
+        "summary": "Delete event by ID",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Event deleted successfully"
+          },
+          "404": {
+            "description": "Event not found"
+          }
+        }
+      }
+    },
+    "/api/v1/panitia/{id_event}": {
+      "get": {
+        "tags": ["Panitia"],
+        "summary": "Get committee data based on event ID",
+        "parameters": [
+          {
+            "name": "id_event",
+            "in": "path",
+            "required": true,
+            "type": "integer",
+            "description": "Event ID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation"
+          }
+        }
+      }
+    },
+    "/api/v1/panitia": {
+      "post": {
+        "tags": ["Panitia"],
+        "summary": "Add devisi",
+        "requestBody": {
+          "content": {
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "id_event": { "type": "integer" },
+                  "nama_devisi": { "type": "string" }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Committee added successfully"
+          }
+        }
+      }
+    },
+    "/api/v1/panitia/{id}": {
+      "put": {
+        "tags": ["Panitia"],
+        "summary": "Update committee name",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "integer",
+            "description": "Committee ID"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "nama_devisi": { "type": "string" }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Committee name updated successfully"
+          }
+        }
+      },
+      "delete": {
+        "tags": ["Panitia"],
+        "summary": "Delete committee",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "integer",
+            "description": "Committee ID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Committee deleted successfully"
+          }
+        }
+      }
+    },
+    "/api/v1/devisi/anggota": {
+      "post": {
+        "tags": ["Panitia"],
+        "summary": "Add division member",
+        "requestBody": {
+          "content": {
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "id_devisi": { "type": "integer" },
+                  "nama_devisi": { "type": "string" }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Division member added successfully"
+          }
+        }
+      }
+    },
+    "/api/v1/devisi/anggota/{id}": {
+      "delete": {
+        "tags": ["Panitia"],
+        "summary": "Delete division member",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "integer",
+            "description": "Division member ID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Division member deleted successfully"
+          }
+        }
+      }
+    },
+    "/api/v1/join/event": {
+      "post": {
+        "tags": ["Event"],
+        "summary": "Join event",
+        "requestBody": {
+          "content": {
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "kode_event": { "type": "string" },
+                  "id_user": { "type": "integer" }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Successfully joined the event"
+          }
+        }
+      }
+    },
+    "/api/v1/anggaran/{id_event}": {
+      "get": {
+        "tags": ["Anggaran"],
+        "summary": "Get anggaran data based on id_event",
+        "parameters": [
+          {
+            "name": "id_event",
+            "in": "path",
+            "required": true,
+            "type": "integer",
+            "description": "ID of the event"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          }
+        }
+      }
+    },
+    "/api/v1/section_anggaran": {
+      "post": {
+        "tags": ["Anggaran"],
+        "summary": "Add a new section anggaran",
+        "requestBody": {
+          "content": {
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "id_event": { "type": "integer" },
+                  "nama_section": { "type": "string" }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Successful response"
+          }
+        }
+      }
+    },
+    "/api/v1/section_anggaran/{id}": {
+      "put": {
+        "tags": ["Anggaran"],
+        "summary": "Update the name of a section anggaran",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "integer",
+            "description": "ID of the section anggaran"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "kode_event": { "type": "string" }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          }
+        }
+      },
+      "delete": {
+        "tags": ["Anggaran"],
+        "summary": "Delete a section anggaran",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "ID of the section anggaran"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          }
+        }
+      }
+    },
+    "/api/v1/anggaran/item": {
+      "post": {
+        "tags": ["Anggaran"],
+        "summary": "Add a new item anggaran",
+        "requestBody": {
+          "content": {
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "id_anggaran": { "type": "integer" },
+                  "uraian": { "type": "string" },
+                  "volume": { "type": "integer" },
+                  "rincian": { "type": "string" },
+                  "harga_satuan": { "type": "integer" },
+                  "total": { "type": "integer" }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Successful response"
+          }
+        }
+      }
+    },
+    "/api/v1/anggaran/item/{id}": {
+      "delete": {
+        "tags": ["Anggaran"],
+        "summary": "Delete an item anggaran",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "integer",
+            "description": "ID of the item anggaran"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          }
+        }
+      }
+    },
+    "/api/v1/agenda_event/{id_event}": {
+      "get": {
+        "summary": "Get agenda by event ID",
+        "tags": ["Agenda"],
+        "parameters": [
+          {
+            "name": "id_event",
+            "in": "path",
+            "required": true,
+            "type": "integer",
+            "description": "ID of the event"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "schema": {
+              "type": "object"
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/agenda": {
+      "post": {
+        "summary": "Add a new agenda",
+        "tags": ["Agenda"],
+        "requestBody": {
+          "content": {
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "id_event": { "type": "integer" },
+                  "nama": { "type": "string" },
+                  "deskripsi": { "type": "string" },
+                  "tanggal": { "type": "string" }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Agenda added successfully",
+            "schema": {
+              "type": "object"
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/agenda/{id}": {
+      "put": {
+        "summary": "Update agenda by ID",
+        "tags": ["Agenda"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "integer",
+            "description": "ID of the agenda"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "nama": { "type": "string" },
+                  "deskripsi": { "type": "string" },
+                  "tanggal": { "type": "string" }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Agenda updated successfully",
+            "schema": {
+              "type": "object"
             }
           }
         }
       },
-      "/api/v1/auth/register": {
-        "post": {
-            "tags": ["Auth"],
-            "summary": "User registration",
-            "requestBody": {
-                "content": {
-                "application/x-www-form-urlencoded": {
-                    "schema": {
-                        "type": "object",
-                        "properties": {
-                            "nama": {"type": "string"},
-                            "email": {"type": "string"},
-                            "password": {"type": "string"}
-                        }
-                    }
+      "delete": {
+        "summary": "Delete agenda by ID",
+        "tags": ["Agenda"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "integer",
+            "description": "ID of the agenda"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Agenda deleted successfully"
+          }
+        }
+      }
+    },
+    "/api/v1/ceklist_event/{id_event}": {
+      "get": {
+        "summary": "Get checklist data by event ID",
+        "tags": ["Checklist"],
+        "parameters": [
+          {
+            "name": "id_event",
+            "in": "path",
+            "required": true,
+            "type": "integer",
+            "description": "ID of the event"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          }
+        }
+      }
+    },
+    "/api/v1/ceklist": {
+      "post": {
+        "summary": "Add a new checklist",
+        "tags": ["Checklist"],
+        "requestBody": {
+          "content": {
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "id_event": { "type": "integer" },
+                  "nama_ceklist": { "type": "string" }
                 }
-                }
-            },
-            "responses": {
-                "200": {
-                "description": "Successful registration"
-                }
+              }
             }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          }
+        }
+      }
+    },
+    "/api/v1/ceklist/{id}": {
+      "put": {
+        "summary": "Update checklist by ID",
+        "tags": ["Checklist"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "integer",
+            "description": "ID of the Ceklist"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "nama_ceklist": { "type": "string" }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete checklist by ID",
+        "tags": ["Checklist"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          }
+        }
+      }
+    },
+    "/api/v1/ceklist/item": {
+      "post": {
+        "summary": "Add a new item to the checklist",
+        "tags": ["Checklist"],
+        "requestBody": {
+          "content": {
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "id_ceklist": { "type": "integer" },
+                  "nama_item": { "type": "string" },
+                  "is_ceklist": { "type": "boolean" }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          }
+        }
+      }
+    },
+    "/api/v1/ceklist/item/{id}": {
+      "put": {
+        "summary": "Update item in the checklist by ID",
+        "tags": ["Checklist"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "integer",
+            "description": "ID of the Ceklist"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "is_ceklist": { "type": "boolean" }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete item in the checklist by ID",
+        "tags": ["Checklist"],
+        "parameters": [
+          {
+            "name": "id_item",
+            "in": "path",
+            "required": true,
+            "type": "integer",
+            "description": "ID of the Ceklist"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          }
+        }
+      }
+    },
+    "/api/v1/users/{id}": {
+      "get": {
+        "tags": ["User"],
+        "summary": "Get user by ID",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "integer",
+            "description": "User ID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      },
+      "put": {
+        "tags": ["User"],
+        "summary": "Update user by ID",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "integer",
+            "description": "User ID"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "nama": { "type": "string" },
+                  "email": { "type": "string" },
+                  "password": { "type": "string" },
+                  "alamat": { "type": "string" },
+                  "telp": { "type": "string" },
+                  "jenis_kelamin": { "type": "string" },
+                  "tgl_lahir": { "type": "date" },
+                  "deskripsi": { "type": "string" }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful operation"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
         }
       }
     }
   }
-  
+}

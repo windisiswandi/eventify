@@ -6,6 +6,7 @@ const { handler } = require('../handler/Handler');
 
 // router.get(`${BASE_URL}/users`, handler.getUsers);
 router.get(`${BASE_URL}/users/:id`, handler.getUserById);
+router.put(`${BASE_URL}/users/:id`, handler.updateUser);
 router.post(`${BASE_URL}/auth/login`, login);
 router.post(`${BASE_URL}/auth/register`, register);
 
@@ -68,7 +69,7 @@ router.delete(`${BASE_URL}/ceklist/:id`, handler.deleteCeklist)
 // tambah item ceklist
 router.post(`${BASE_URL}/ceklist/item`, handler.addItemCeklist)
 // update item ceklist
-router.put(`${BASE_URL}/ceklist/item`, handler.updateItemCeklist)
+router.put(`${BASE_URL}/ceklist/item/:id`, handler.updateItemCeklist)
 // delete item ceklist
 router.delete(`${BASE_URL}/ceklist/item/:id`, handler.deleteItemCeklist)
 
